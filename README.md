@@ -6,7 +6,7 @@ Compare two sosreports and show the differences.
 ~~~
 usage: sosdiff [-h] [-e PluginName] [-i PluginName] sospath1 sospath2
 
-Compare two more sosreports and show the differences.
+Compare two sosreports and show the differences.
 
 positional arguments:
   sospath1              Paths to first sosreport folder.

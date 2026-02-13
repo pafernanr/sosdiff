@@ -12,7 +12,7 @@ class Conf:
         self.sos = {}
 
         self.parser = argparse.ArgumentParser(
-            description=("Compare two more sosreports and show \
+            description=("Compare two sosreports and show \
                          the differences.")
             )
         self.parser.add_argument(

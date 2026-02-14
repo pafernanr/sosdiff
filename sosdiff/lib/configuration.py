@@ -38,13 +38,13 @@ class Conf:
         self.parser.add_argument(
             '-t',
             '--text',
-            help="Print plain text without using colors.",
+            help="Print plain text without colors.",
             default=False,
             action='store_true'
             )
         self.parser.add_argument(
             'sospath1',
-            help='Paths to first sosreport folder.',
+            help='Path to first sosreport folder.',
             type=self.valid_sosreport_path
             )
         self.parser.add_argument(

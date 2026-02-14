@@ -9,7 +9,7 @@ usage: sosdiff [-h] [-d] [-e PluginName] [-i PluginName] [-t] sospath1 sospath2
 Compare two sosreports and show the differences.
 
 positional arguments:
-  sospath1              Paths to first sosreport folder.
+  sospath1              Path to first sosreport folder.
   sospath2              Path to second sosreport folder.
 
 options:
@@ -19,5 +19,5 @@ options:
                         Exclude this PluginName. Can be used multiple times.
   -i PluginName, --include PluginName
                         Include only this PluginName. Can be used multiple times.
-  -t, --text            Print plain text without using colors.
+  -t, --text            Print plain text without colors.
 ~~~

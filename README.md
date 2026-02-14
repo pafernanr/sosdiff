@@ -14,7 +14,7 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
-  -d, --diff            Show `diff` if a file content don't match.
+  -d, --diff            Show `diff` when file content don't match.
   -e PluginName, --exclude PluginName
                         Exclude this PluginName. Can be used multiple times.
   -i PluginName, --include PluginName

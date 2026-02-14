@@ -15,7 +15,7 @@ class Conf:
         self.parser.add_argument(
             '-d',
             '--diff',
-            help="Show `diff` if a file content don't match.",
+            help="Show `diff` when file content don't match.",
             default=False,
             action='store_true'
             )

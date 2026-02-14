@@ -1,4 +1,4 @@
-### PulpBrowser
+### sosdiff
 Compare two sosreports and show the differences.
 [sosreport](https://github.com/sosreport/sos).
 

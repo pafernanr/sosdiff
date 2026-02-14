@@ -28,7 +28,7 @@ setuptools.setup(
     license='GPLv3',
     author='Pablo Fernández Rodríguez',
     url='https://github.com/pafernanr/sosdiff',
-    keywords='theforeman pulpcore pulp',
+    keywords='sos sosreport',
     description="Compare two sosreports and show the differences.",
     long_description_content_type='text/markdown',
     long_description=read("README.md"),

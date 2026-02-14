@@ -12,7 +12,7 @@ There are different ways to to install `sosdiff`.
 
 - Using the prebuild packages at [Latest Release](https://github.com/pafernanr/sosdiff/releases/latest)
 
-#### `sosdiff` Usage
+#### Usage
 ~~~
 usage: sosdiff [-h] [-d] [-e PluginName] [-i PluginName] [-t] sospath1 sospath2
 

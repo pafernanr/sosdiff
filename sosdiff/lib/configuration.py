@@ -1,19 +1,23 @@
 import argparse
 import os
 
-from sosdiff.lib.util import Util
-
 
 class Conf:
 
     def __init__(self):
         self.cwd = os.getcwd()
-        self.util = Util()
         self.sos = {}
 
         self.parser = argparse.ArgumentParser(
             description=("Compare two sosreports and show \
                          the differences.")
+            )
+        self.parser.add_argument(
+            '-d',
+            '--diff',
+            help="Show `diff` if a file content don't match.",
+            default=False,
+            action='store_true'
             )
         self.parser.add_argument(
             '-e',
@@ -30,6 +34,13 @@ class Conf:
             help="Include only this PluginName. Can be used multiple times.",
             default=[],
             action='append'
+            )
+        self.parser.add_argument(
+            '-t',
+            '--text',
+            help="Output text without colors.",
+            default=False,
+            action='store_true'
             )
         self.parser.add_argument(
             'sospath1',

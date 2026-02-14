@@ -15,33 +15,33 @@ class SosDiff:
     def compare(self, s1, s2):
         for plugin_name, plugin_data in s1.items():
             if plugin_name not in s2:
-                self.util.print_out(severity=4, message="plugin missing",
+                self.util.print_out(severity=4, message="missing plugin",
                                     pluginname=plugin_name)
                 continue
-            for name, data in plugin_data.items():
-                if name not in s2[plugin_name]:
-                    self.util.print_out(severity=3, message="name missing",
-                                        pluginname=plugin_name, name=name)
+            for entity, data in plugin_data.items():
+                if entity not in s2[plugin_name]:
+                    self.util.print_out(severity=3, message="missing entity",
+                                        pluginname=plugin_name, entity=entity)
                     continue
                 for k, v in data.items():
                     if "href" in v and self.util.is_href_excluded(v["href"]):
                         continue
                     else:
-                        if k not in s2[plugin_name][name]:
+                        if k not in s2[plugin_name][entity]:
                             self.util.print_out(
-                                severity=2, message="file missing",
-                                pluginname=plugin_name, name=name,
+                                severity=2, message="missing file",
+                                pluginname=plugin_name, entity=entity,
                                 file=k)
                             continue
                         if "href" in v:
-                            self.content_diff(plugin_name, name, v["href"])
+                            self.content_diff(plugin_name, entity, v["href"])
 
-    def content_diff(self, plugin_name, name, file_path):
+    def content_diff(self, plugin_name, entity, file_path):
         c1 = self.util.read_file(self.sospath1, file_path)
         c2 = self.util.read_file(self.sospath2, file_path)
         if c1 != c2:
-            self.util.print_out(severity=1, message="file content",
-                                pluginname=plugin_name, name=name,
+            self.util.print_out(severity=1, message="content diff",
+                                pluginname=plugin_name, entity=entity,
                                 file=file_path[2:])
             if self.conf.args.diff:
                 self.util.print_diff(self.util.exec_command(

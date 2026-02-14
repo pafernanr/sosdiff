@@ -20,7 +20,7 @@ class Util:
             r'^\.\./var/log/.*$',
             r'^\.\./sos_strings/.*var\.log.*\.tailed$']
 
-    def print_out(self, severity, message, pluginname, name=None, file=None):
+    def print_out(self, severity, message, pluginname, entity=None, file=None):
         sep = " :: "
         color = ""
         reset = ""
@@ -31,8 +31,8 @@ class Util:
 
         out = f"{color}[{message}]{reset}"
         out += f"{sep}{pluginname}"
-        if name:
-            out += f"{sep}{name}"
+        if entity:
+            out += f"{sep}{entity}"
         if file:
             out += f"{sep}{file}"
         print(out)

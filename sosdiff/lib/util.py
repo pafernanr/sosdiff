@@ -25,7 +25,7 @@ class Util:
         color = ""
         reset = ""
         if not self.conf.args.text:
-            sep = f"{Style.GREEN_BOLD}{sep}{Style.RESET}"
+            sep = f"{Style.GREEN}{sep}{Style.RESET}"
             color = self.set_out_color(severity)
             reset = Style.RESET
 
@@ -38,18 +38,22 @@ class Util:
         print(out)
 
     def print_diff(self, diff):
-        print(f"{diff}")
+        # diff = '    ' + diff.replace('\n', '\n    ')
+        if self.conf.args.text:
+            print(f"{diff}")
+        else:
+            print(f"{Style.GRAY}{diff}{Style.RESET}")
 
     def set_out_color(self, severity):
         if severity == 4:
-            return Style.RED_BOLD
+            return Style.RED
         if severity == 3:
-            return Style.ORANGE_BOLD
+            return Style.ORANGE
         if severity == 2:
-            return Style.YELLOW_BOLD
+            return Style.YELLOW
         if severity == 1:
-            return Style.PURPLE_BOLD
-        return Style.BLUE_BOLD
+            return Style.PURPLE
+        return Style.BLUE
 
     def is_plugin_included(self, plugin_name):
         if len(self.conf.args.include) > 0:
@@ -153,21 +157,16 @@ class Util:
 
 
 class Style:
-    GREEN = '\033[0;32m'
-    GREEN_BOLD = '\033[0;32m\033[1m'
-    RED = '\033[0;31m'
-    RED_BOLD = '\033[0;31m'
-    ORANGE = '\033[01;103m'
-    ORANGE_BOLD = '\033[01;103m\033[1m'
-    YELLOW = '\033[01;33m'
-    YELLOW_BOLD = '\033[01;33m\033[1m'
     BLUE = '\033[0;34m'
-    BLUE_BOLD = '\033[0;34m\033[1m'
     CYAN = '\033[01;36m'
-    CYAN_BOLD = '\033[01;36m\033[1m'
+    GRAY = '\033[0;90m'
+    GREEN = '\033[0;32m'
+    ORANGE = '\033[01;103m'
+    RED = '\033[0;31m'
     PURPLE = '\033[0;35m'
-    PURPLE_BOLD = '\033[0;35m\033[1m'
+    YELLOW = '\033[01;33m'
+
     BOLD = '\033[1m'
-    RESET = '\033[0m'
     NEW_LINE = '\n'
+    RESET = '\033[0m'
     RESET_NEW_LINE = '\033[0m\n'

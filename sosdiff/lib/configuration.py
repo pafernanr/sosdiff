@@ -38,7 +38,7 @@ class Conf:
         self.parser.add_argument(
             '-t',
             '--text',
-            help="Output text without colors.",
+            help="Print plain text without using colors.",
             default=False,
             action='store_true'
             )

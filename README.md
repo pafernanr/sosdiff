@@ -19,5 +19,5 @@ options:
                         Exclude this PluginName. Can be used multiple times.
   -i PluginName, --include PluginName
                         Include only this PluginName. Can be used multiple times.
-  -t, --text            Output text without colors.
+  -t, --text            Print plain text without using colors.
 ~~~

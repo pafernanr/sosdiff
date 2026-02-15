@@ -5,7 +5,7 @@ To compare them `sosdiff` reads the file `sos_reports/sos.json` and lists the di
 - [-] Plugin is missing on sosreport2. 
 - [--] Entity is missing on sosreport2. 
 - [---] File/Command-output is missing on sosreport2.
-- [%] File content is different on sosreport2. Optionally show `diff` command output.
+- [%] File content is different. Optionally show `diff` command output.
 - [+] Plugin is present on sosreport2 but it isn't on sosreport1.
 - [++] Entity is present on sosreport2 but it isn't on sosreport1.
 - [+++] File is present on sosreport2 but it isn't on sosreport1.

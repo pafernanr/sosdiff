@@ -65,6 +65,8 @@ class Conf:
         #     )
 
     def valid_sosreport_path(self, path):
+        if path[-1] == "/":
+            path = path[:-1]
         p = path + "/sos_reports/sos.json"
         if os.path.exists(p):
             return path

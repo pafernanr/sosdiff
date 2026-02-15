@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import subprocess
 import sys
@@ -17,8 +18,10 @@ class Util:
     def __init__(self, conf):
         self.conf = conf
         self.excluded_href = [
-            r'^\.\./var/log/.*$',
-            r'^\.\./sos_strings/.*var\.log.*\.tailed$']
+            r'^/var/log/.*$',
+            r'^/sos_strings/.*var\.log.*\.tailed$',
+            r'^/sys/class/.*$',
+            r'^/sys/devices/.*$',]
 
     def print_out(self, severity, message, pluginname,
                   entity=None, propval=None):
@@ -89,23 +92,22 @@ class Util:
     def load_sos_report(self, sosreport_path):
         try:
             return self.get_plugins(json.loads(
-                self.read_file(sosreport_path, "../sos_reports/sos.json")
+                self.read_file(f"{sosreport_path}/sos_reports/sos.json")
                 ))
         except Exception as e:
             print(e)
         return False
 
-    def read_file(self, sospath, file_path):
-        abs_path = f"{sospath}/{file_path[2:]}"
+    def read_file(self, file_path):
         try:
-            if self.file_is_binary(abs_path):
-                with open(f"{abs_path}", "rb") as f:
+            if self.file_is_binary(file_path):
+                with open(f"{file_path}", "rb") as f:
                     return f.read()
             else:
-                with open(f"{abs_path}", "r", encoding="utf-8") as f:
+                with open(f"{file_path}", "r", encoding="utf-8") as f:
                     return f.read()
         except Exception as e:
-            print(f"Error reading file {abs_path}\n{e}")
+            print(f"Error reading file {file_path}\n{e}")
 
     def transform_plugin_list_to_dict(self, items):
         out = {}

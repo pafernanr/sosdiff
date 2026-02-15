@@ -1,3 +1,4 @@
+import os
 import sys
 
 from sosdiff.lib.configuration import Conf
@@ -30,7 +31,7 @@ class SosDiff:
 
     def compare_properties(self, plugin_name, entity, properties, s2):
         for k, v in properties.items():
-            if "href" in v and self.util.is_href_excluded(v["href"]):
+            if "href" in v and self.util.is_href_excluded(v["href"][2:]):
                 continue
             if k not in s2[plugin_name][entity]:
                 self.util.print_out(2, "---", plugin_name,
@@ -40,21 +41,25 @@ class SosDiff:
 
     def compare_values(self, plugin_name, entity, v):
         if entity in ["copied_files", "created_files", "commands"]:
-            self.compare_file_content(plugin_name, entity, v["href"])
+            self.compare_file_content(plugin_name, entity, v["href"][2:])
         else:
             print(f"ERROR: Unknown Entity {entity}")
             sys.exit(1)
 
     def compare_file_content(self, plugin_name, entity, file_path):
-        c1 = self.util.read_file(self.sospath1, file_path)
-        c2 = self.util.read_file(self.sospath2, file_path)
-        if c1 != c2:
+        path1 = f"{self.sospath1}/{file_path}"
+        path2 = f"{self.sospath2}/{file_path}"
+        if not os.path.exists(path1) or not os.path.exists(path2):
             self.util.print_out(1, "%", plugin_name,
-                                entity=entity, propval=file_path[2:])
-            if self.conf.args.diff:
-                self.util.print_diff(self.util.exec_command(
-                    f"diff {self.sospath1}/{file_path[2:]} \
-                        {self.sospath2}/{file_path[2:]}"))
+                                entity=entity, propval=file_path)
+        else:
+            if self.util.read_file(path1) != self.util.read_file(path2):
+                self.util.print_out(1, "%", plugin_name,
+                                    entity=entity, propval=file_path)
+                if self.conf.args.diff:
+                    self.util.print_diff(self.util.exec_command(
+                        f"diff {self.sospath1}/{file_path} \
+                            {self.sospath2}/{file_path}"))
 
     def show_extra_plugins(self, s1, s2):
         extra = []

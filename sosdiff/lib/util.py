@@ -20,7 +20,8 @@ class Util:
             r'^\.\./var/log/.*$',
             r'^\.\./sos_strings/.*var\.log.*\.tailed$']
 
-    def print_out(self, severity, message, pluginname, entity=None, file=None):
+    def print_out(self, severity, message, pluginname,
+                  entity=None, propval=None):
         sep = " :: "
         color = ""
         reset = ""
@@ -33,8 +34,8 @@ class Util:
         out += f"{sep}{pluginname}"
         if entity:
             out += f"{sep}{entity}"
-        if file:
-            out += f"{sep}{file}"
+        if propval:
+            out += f"{sep}{propval}"
         print(out)
 
     def print_diff(self, diff):
@@ -161,7 +162,7 @@ class Style:
     CYAN = '\033[01;36m'
     GRAY = '\033[0;90m'
     GREEN = '\033[0;32m'
-    ORANGE = '\033[01;103m'
+    ORANGE = '\033[01;93m'
     RED = '\033[0;31m'
     PURPLE = '\033[0;35m'
     YELLOW = '\033[01;33m'

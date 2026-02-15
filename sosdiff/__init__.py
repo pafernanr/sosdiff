@@ -1,3 +1,5 @@
+import sys
+
 from sosdiff.lib.configuration import Conf
 from sosdiff.lib.util import Util
 
@@ -22,7 +24,7 @@ class SosDiff:
     def compare_entities(self, plugin_name, plugin_data, s2):
         for entity, data in plugin_data.items():
             if entity not in s2[plugin_name]:
-                self.util.print_out(3, "-", plugin_name, entity=entity)
+                self.util.print_out(3, "--", plugin_name, entity=entity)
                 continue
             self.compare_properties(plugin_name, entity, data, s2)
 
@@ -31,24 +33,61 @@ class SosDiff:
             if "href" in v and self.util.is_href_excluded(v["href"]):
                 continue
             if k not in s2[plugin_name][entity]:
-                self.util.print_out(2, "-", plugin_name,
-                                    entity=entity, file=k)
+                self.util.print_out(2, "---", plugin_name,
+                                    entity=entity, propval=k)
                 continue
-            if "href" in v:
-                self.compare_file_content(plugin_name, entity, v["href"])
+            self.compare_values(plugin_name, entity, v)
+
+    def compare_values(self, plugin_name, entity, v):
+        if entity in ["copied_files", "created_files", "commands"]:
+            self.compare_file_content(plugin_name, entity, v["href"])
+        else:
+            print(f"ERROR: Unknown Entity {entity}")
+            sys.exit(1)
 
     def compare_file_content(self, plugin_name, entity, file_path):
         c1 = self.util.read_file(self.sospath1, file_path)
         c2 = self.util.read_file(self.sospath2, file_path)
         if c1 != c2:
             self.util.print_out(1, "%", plugin_name,
-                                entity=entity, file=file_path[2:])
+                                entity=entity, propval=file_path[2:])
             if self.conf.args.diff:
                 self.util.print_diff(self.util.exec_command(
                     f"diff {self.sospath1}/{file_path[2:]} \
                         {self.sospath2}/{file_path[2:]}"))
 
+    def show_extra_plugins(self, s1, s2):
+        extra = []
+        for k in s2.keys():
+            if k not in s1.keys():
+                extra.append(k)
+            else:
+                self.show_extra_entities(s1[k], s2[k], k)
+        for e in extra:
+            self.util.print_out(3, "+", e)
+
+    def show_extra_entities(self, e1, e2, plugin_name):
+        extra = []
+        for entity in e2.keys():
+            if entity not in e1.keys():
+                extra.append(entity)
+            else:
+                self.show_extra_properties(e1[entity], e2[entity],
+                                           plugin_name, entity)
+        for e in extra:
+            self.util.print_out(3, "++", plugin_name, entity=e)
+
+    def show_extra_properties(self, p1, p2, plugin_name, entity):
+        extra = []
+        for prop in p2.keys():
+            if entity not in p1.keys():
+                extra.append(prop)
+        for e in extra:
+            self.util.print_out(3, "+++", plugin_name,
+                                entity=entity, propval=e,)
+
     def main(self):
         self.sos1 = self.util.load_sos_report(self.sospath1)
         self.sos2 = self.util.load_sos_report(self.sospath2)
         self.compare_plugins(self.sos1, self.sos2)
+        self.show_extra_plugins(self.sos1, self.sos2)

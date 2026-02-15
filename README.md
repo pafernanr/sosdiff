@@ -1,6 +1,15 @@
 ### sosdiff
-Compare two sosreports and show the differences.
-[sosreport](https://github.com/sosreport/sos).
+Compare two [sosreport](https://github.com/sosreport/sos) and show the differences.
+
+To compare them `sosdiff` reads the file `sos_reports/sos.json` and lists the differences:
+- [-] Plugin is missing on sosreport2. 
+- [--] Entity is missing on sosreport2. 
+- [---] File/Command-output is missing on sosreport2.
+- [%] File/Command-output is missing/different on sosreport2. Optionally show files `diff`.
+- [+] Plugin is present on sosreport2 but it isn't on sosreport1.
+- [++] Entity is present on sosreport2 but it isn't on sosreport1.
+- [+++] File is present on sosreport2 but it isn't on sosreport1.
+
 
 #### Installation
 There are multiple ways to to install `sosdiff`.

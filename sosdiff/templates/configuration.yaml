@@ -1,0 +1,11 @@
+main:
+  text: False  # Print plain text without colors.
+  diff: False  # Show `diff` when file content don't match. 
+exclude_files:  # Custom exlude file list.
+  # Note that some files are automatically exluded to avoid "Too many levels of symbolic links" Errors
+  # Refer to `self.excluded_href` at https://github.com/pafernanr/sosdiff/blob/main/sosdiff/lib/util.py
+  # Below are recomended values
+  - ^/sos_commands/logs/.*$
+  - ^/sos_commands/.*/journalctl_.*$
+  - ^/var/log/.*$
+  - ^/sos_strings/.*var\.log.*\.tailed$

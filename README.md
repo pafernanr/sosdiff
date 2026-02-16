@@ -10,14 +10,9 @@ To compare them `sosdiff` reads the file `sos_reports/sos.json` and lists the di
 - [++] Entity is present on sosreport2 but it isn't on sosreport1.
 - [+++] File is present on sosreport2 but it isn't on sosreport1.
 
-Log files and some other are ingnored:
-~~~
-self.excluded_href = [
-            r'^/var/log/.*$',
-            r'^/sos_strings/.*var\.log.*\.tailed$',
-            r'^/sys/class/.*$',
-            r'^/sys/devices/.*$',]
-~~~
+#### Dependencies
+Required python libraries:
+- pyyaml
 
 #### Installation
 There are multiple ways to to install `sosdiff`.
@@ -31,7 +26,7 @@ There are multiple ways to to install `sosdiff`.
 
 #### Usage
 ~~~
-usage: sosdiff [-h] [-d] [-e PluginName] [-i PluginName] [-t] sospath1 sospath2
+usage: sosdiff [-h] [-c <Path to configuration file>] [-d] [-e PluginName] [-i PluginName] [-t] sospath1 sospath2
 
 Compare two sosreports and show the differences.
 
@@ -41,6 +36,8 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
+  -c <Path to configuration file>, --configuration <Path to configuration file>
+                        Configuration file. Defaults to `/home/pablofr/.sosdiff/configuration.yaml`
   -d, --diff            Show `diff` when file content don't match.
   -e PluginName, --exclude PluginName
                         Exclude this PluginName. Can be used multiple times.

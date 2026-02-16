@@ -11,7 +11,7 @@ def read(fname):
 setuptools.setup(
     name='sosdiff',
     version='0.0.0',
-    setup_requires=[],
+    setup_requires=['pyyaml'],
     scripts=[
         'sosdiff/bin/__init__.py'],
     entry_points={

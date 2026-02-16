@@ -18,8 +18,6 @@ class Util:
     def __init__(self, conf):
         self.conf = conf
         self.excluded_href = [
-            r'^/var/log/.*$',
-            r'^/sos_strings/.*var\.log.*\.tailed$',
             r'^/sys/class/.*$',
             r'^/sys/devices/.*$',]
 
@@ -28,7 +26,7 @@ class Util:
         sep = " :: "
         color = ""
         reset = ""
-        if not self.conf.args.text:
+        if not self.conf.text:
             sep = f"{Style.GREEN}{sep}{Style.RESET}"
             color = self.set_out_color(severity)
             reset = Style.RESET
@@ -43,7 +41,7 @@ class Util:
 
     def print_diff(self, diff):
         # diff = '    ' + diff.replace('\n', '\n    ')
-        if self.conf.args.text:
+        if self.conf.text:
             print(f"{diff}")
         else:
             print(f"{Style.GRAY}{diff}{Style.RESET}")
@@ -69,10 +67,27 @@ class Util:
         return True
 
     def is_href_excluded(self, href):
-        for exp in self.excluded_href:
+        for exp in self.excluded_href + self.conf.exclude_files:
             if re.match(exp, href):
                 return True
         return False
+
+    def list_files_in_href(self, basedir, relpath):
+        files = []
+        abspath = f"{basedir}{relpath}"
+        if os.path.isdir(abspath):
+            with os.scandir(abspath) as entries:
+                for entry in entries:
+                    relpath = entry.path.replace(basedir, '', 1)
+                    if entry.is_file():
+                        print(f"_file_{relpath}")
+                        files.append(relpath)
+                    elif entry.is_dir():
+                        print(f"_dir_{relpath}")
+                        files += self.list_files_in_href(basedir, relpath)
+        else:
+            files.append(relpath)
+        return files
 
     def get_plugins(self, sos):
         sos = self.transform_plugin_list_to_dict(sos)

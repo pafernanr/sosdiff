@@ -12,6 +12,7 @@ BuildArch: noarch
 BuildRoot: %{_tmppath}/%{name}-buildroot
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
+Requires: python3-pyyaml
 
 %description
 Compare two more sosreports and show the differences.

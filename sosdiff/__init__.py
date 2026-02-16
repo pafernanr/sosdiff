@@ -47,19 +47,21 @@ class SosDiff:
             sys.exit(1)
 
     def compare_file_content(self, plugin_name, entity, file_path):
-        path1 = f"{self.sospath1}/{file_path}"
-        path2 = f"{self.sospath2}/{file_path}"
-        if not os.path.exists(path1) or not os.path.exists(path2):
-            self.util.print_out(1, "/", plugin_name,
-                                entity=entity, propval=file_path)
-        else:
-            if self.util.read_file(path1) != self.util.read_file(path2):
+        paths = self.util.list_files_in_href(self.sospath1, file_path)
+        for p in paths:
+            path1 = f"{self.sospath1}/{p}"
+            path2 = f"{self.sospath2}/{p}"
+            if not os.path.exists(path1) or not os.path.exists(path2):
                 self.util.print_out(1, "/", plugin_name,
-                                    entity=entity, propval=file_path)
-                if self.conf.args.diff:
-                    self.util.print_diff(self.util.exec_command(
-                        f"diff {self.sospath1}/{file_path} \
-                            {self.sospath2}/{file_path}"))
+                                    entity=entity, propval=p)
+            else:
+                if self.util.read_file(path1) != self.util.read_file(path2):
+                    self.util.print_out(1, "/", plugin_name,
+                                        entity=entity, propval=p)
+                    if self.conf.diff:
+                        self.util.print_diff(self.util.exec_command(
+                            f"diff {self.sospath1}/{p} \
+                                {self.sospath2}/{p}"))
 
     def show_extra_plugins(self, s1, s2):
         extra = []

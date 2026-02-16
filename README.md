@@ -1,15 +1,18 @@
 ### sosdiff
 Compare two [sosreport](https://github.com/sosreport/sos) and show the differences.
 
-To compare them `sosdiff` reads the file `sos_reports/sos.json` and lists the differences:
-- [-] Plugin is missing on sosreport2. 
-- [--] Entity is missing on sosreport2. 
-- [---] File is missing on sosreport2.
-- [/] File content is different. Optionally show `diff` command output.
-- [+] Plugin is present on sosreport2 but it isn't on sosreport1.
-- [++] Entity is present on sosreport2 but it isn't on sosreport1.
-- [+++] File is present on sosreport2 but it isn't on sosreport1.
-
+- To compare them `sosdiff` reads the file `sos_reports/sos.json` and lists the differences:
+  - [-] Plugin is missing on sosreport2. 
+  - [--] Entity is missing on sosreport2. 
+  - [---] File is missing on sosreport2.
+  - [/] File content is different. Optionally show `diff` command output.
+  - [+] Plugin is present on sosreport2 but it isn't on sosreport1.
+  - [++] Entity is present on sosreport2 but it isn't on sosreport1.
+  - [+++] File is present on sosreport2 but it isn't on sosreport1.
+- Some files are automatically exluded to avoid "Too many levels of symbolic links" errors.
+  - Refer to [self.excluded_href ](https://github.com/pafernanr/sosdiff/blob/main/sosdiff/lib/util.py#L20)
+  - Add custom excluded files using configuration file at `~/.sosdiff/configuration.yaml`.
+   
 #### Dependencies
 Required python libraries:
 - pyyaml
@@ -26,7 +29,7 @@ There are multiple ways to to install `sosdiff`.
 
 #### Usage
 ~~~
-usage: sosdiff [-h] [-c <Path to configuration file>] [-d] [-e PluginName] [-i PluginName] [-t] sospath1 sospath2
+usage: sosdiff [-h] [-c <config_file>] [-d] [-e PluginName] [-i PluginName] [-t] sospath1 sospath2
 
 Compare two sosreports and show the differences.
 
@@ -36,7 +39,7 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
-  -c <Path to configuration file>, --configuration <Path to configuration file>
+  -c <config_file>, --configuration <config_file>
                         Configuration file. Defaults to `/home/pablofr/.sosdiff/configuration.yaml`
   -d, --diff            Show `diff` when file content don't match.
   -e PluginName, --exclude PluginName

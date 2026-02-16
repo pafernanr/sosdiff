@@ -20,7 +20,7 @@ class Conf:
         self.parser.add_argument(
             '-c',
             '--configuration',
-            metavar="<Path to configuration file>",
+            metavar="<config_file>",
             help=f"Configuration file. Defaults to \
                 `{self.default_config_file}`",
             default=self.default_config_file,

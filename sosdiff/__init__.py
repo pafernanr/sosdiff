@@ -50,11 +50,11 @@ class SosDiff:
         path1 = f"{self.sospath1}/{file_path}"
         path2 = f"{self.sospath2}/{file_path}"
         if not os.path.exists(path1) or not os.path.exists(path2):
-            self.util.print_out(1, "%", plugin_name,
+            self.util.print_out(1, "/", plugin_name,
                                 entity=entity, propval=file_path)
         else:
             if self.util.read_file(path1) != self.util.read_file(path2):
-                self.util.print_out(1, "%", plugin_name,
+                self.util.print_out(1, "/", plugin_name,
                                     entity=entity, propval=file_path)
                 if self.conf.args.diff:
                     self.util.print_diff(self.util.exec_command(

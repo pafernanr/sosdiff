@@ -5,11 +5,19 @@ To compare them `sosdiff` reads the file `sos_reports/sos.json` and lists the di
 - [-] Plugin is missing on sosreport2. 
 - [--] Entity is missing on sosreport2. 
 - [---] File is missing on sosreport2.
-- [%] File content is different. Optionally show `diff` command output.
+- [/] File content is different. Optionally show `diff` command output.
 - [+] Plugin is present on sosreport2 but it isn't on sosreport1.
 - [++] Entity is present on sosreport2 but it isn't on sosreport1.
 - [+++] File is present on sosreport2 but it isn't on sosreport1.
 
+Log files and some other are ingnored:
+~~~
+self.excluded_href = [
+            r'^/var/log/.*$',
+            r'^/sos_strings/.*var\.log.*\.tailed$',
+            r'^/sys/class/.*$',
+            r'^/sys/devices/.*$',]
+~~~
 
 #### Installation
 There are multiple ways to to install `sosdiff`.

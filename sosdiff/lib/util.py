@@ -164,10 +164,10 @@ class Style:
     CYAN = '\033[01;36m'
     GRAY = '\033[0;90m'
     GREEN = '\033[0;32m'
-    ORANGE = '\033[01;93m'
+    ORANGE = '\033[01;33m'
     RED = '\033[0;31m'
     PURPLE = '\033[0;35m'
-    YELLOW = '\033[01;33m'
+    YELLOW = '\033[01;93m'
 
     BOLD = '\033[1m'
     NEW_LINE = '\n'

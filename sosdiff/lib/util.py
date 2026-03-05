@@ -9,6 +9,7 @@ class Util:
 
     def __init__(self, conf):
         self.conf = conf
+        # exluded to avoid "Too many levels of symbolic links" errors.
         self.excluded_href = [
             r'^/sys/class/.*$',
             r'^/sys/devices/.*$',]

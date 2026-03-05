@@ -10,7 +10,7 @@ Compare two [sosreport](https://github.com/sosreport/sos) and show the differenc
   - [++] Entity is present on sosreport2 but it isn't on sosreport1.
   - [+++] File is present on sosreport2 but it isn't on sosreport1.
 - Some files are automatically exluded to avoid "Too many levels of symbolic links" errors.
-  - Refer to [excluded_href](https://github.com/pafernanr/sosdiff/blob/main/sosdiff/lib/util.py#L20)
+  - Refer to [excluded_href](https://github.com/pafernanr/sosdiff/blob/main/sosdiff/lib/util.py)
 - Custom excluded files can be added to configuration file at `~/.sosdiff/configuration.ini`.
    
 #### Installation

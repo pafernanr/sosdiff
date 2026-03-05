@@ -31,8 +31,9 @@ class SosDiff:
 
     def compare_properties(self, plugin_name, entity, properties, s2):
         for k, v in properties.items():
-            if "href" in v and self.util.is_href_excluded(v["href"][2:]):
-                continue
+            if "href" in v:
+                if not self.util.is_file_included(v["href"][2:]):
+                    continue
             if k not in s2[plugin_name][entity]:
                 self.util.print_out(2, "---", plugin_name,
                                     entity=entity, propval=k)
@@ -69,29 +70,30 @@ class SosDiff:
             if k not in s1.keys():
                 extra.append(k)
             else:
-                self.show_extra_entities(s1[k], s2[k], k)
+                self.show_extra_entities(k, s1[k], s2[k])
         for e in extra:
             self.util.print_out(3, "+", e)
 
-    def show_extra_entities(self, e1, e2, plugin_name):
+    def show_extra_entities(self, plugin_name, entities1, entities2):
         extra = []
-        for entity in e2.keys():
-            if entity not in e1.keys():
+        for entity in entities2.keys():
+            if entity not in entities1.keys():
                 extra.append(entity)
             else:
-                self.show_extra_properties(e1[entity], e2[entity],
-                                           plugin_name, entity)
+                self.show_extra_properties(plugin_name, entity,
+                                           entities1[entity],
+                                           entities2[entity])
         for e in extra:
             self.util.print_out(3, "++", plugin_name, entity=e)
 
-    def show_extra_properties(self, p1, p2, plugin_name, entity):
-        extra = []
-        for prop in p2.keys():
-            if entity not in p1.keys():
-                extra.append(prop)
-        for e in extra:
-            self.util.print_out(3, "+++", plugin_name,
-                                entity=entity, propval=e,)
+    def show_extra_properties(self, plugin_name, entity,
+                              properties1, properties2):
+        for prop in properties2.keys():
+            if prop not in properties1.keys():
+                if not self.util.is_file_included(prop):
+                    continue
+                self.util.print_out(3, "+++", plugin_name,
+                                    entity=entity, propval=prop)
 
     def main(self):
         self.sos1 = self.util.load_sos_report(self.sospath1)

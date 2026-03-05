@@ -51,19 +51,30 @@ class Util:
         return Style.BLUE
 
     def is_plugin_included(self, plugin_name):
+        out = True
         if len(self.conf.only_plugins) > 0:
             if plugin_name not in self.conf.only_plugins:
-                return False
+                out = False
         if len(self.conf.skip_plugins) > 0:
-            if plugin_name in self.conf.skip_plugins:
-                return False
-        return True
+            if plugin_name not in self.conf.skip_plugins:
+                out = True
+        return out
 
-    def is_href_excluded(self, href):
+    def is_file_included(self, file_name):
+        if len(self.conf.include_files) > 0:
+            for r in self.conf.include_files:
+                if re.match(r, file_name):
+                    return True
+            return False
+        return self.is_href_included(file_name)
+
+    def is_href_included(self, href):
         for exp in self.excluded_href + self.conf.exclude_files:
             if re.match(exp, href):
-                return True
-        return False
+                # print(f"excluded: {href}")
+                return False
+        # print(f"included: {href}")
+        return True
 
     def list_files_in_href(self, basedir, relpath):
         files = []

@@ -7,14 +7,16 @@ import re
 class Conf:
 
     def __init__(self):
+        self.configparser = ConfigParser()
         self.default_config_dir = str(os.path.expanduser('~')) + "/.sosdiff"
         self.default_config_file = (
             f"{self.default_config_dir}/configuration.ini")
         self.text = False
         self.diff = False
+        self.exclude_files = []
+        self.include_files = []
         self.skip_plugins = []
         self.only_plugins = []
-        self.exclude_files = []
 
         self.parser = argparse.ArgumentParser(
             description=("Compare two sosreports and show \
@@ -36,20 +38,34 @@ class Conf:
             action='store_true'
             )
         self.parser.add_argument(
+            '-e',
+            '--exclude-files',
+            help="Exclude files matching this regexp. \
+                Can be used multiple times.",
+            default=[],
+            action='append'
+            )
+        self.parser.add_argument(
+            '-i',
+            '--include-files',
+            help="Include files matching this regexp. \
+                Can be used multiple times.",
+            default=[],
+            action='append'
+            )
+        self.parser.add_argument(
             '-n',
             '--skip-plugins',
-            dest='skip_plugins',
             metavar="SKIP_PLUGINS",
-            help="disable these plugins. Can be used multiple times.",
+            help="Disable these plugins. Can be used multiple times.",
             default=[],
             action='append'
             )
         self.parser.add_argument(
             '-o',
             '--only-plugins',
-            dest='only_plugins',
             metavar="ONLY_PLUGINS",
-            help="enable these plugins only. Can be used multiple times.",
+            help="Enable these plugins only. Can be used multiple times.",
             default=[],
             action='append'
             )
@@ -76,30 +92,30 @@ class Conf:
         #     self.parser.error(
         #         "`--include` and `--exclude` are mutually exclusive.")
 
-        self.read_configuration_file()
+        self.set_configuration()
 
-    def read_configuration_file(self):
-        parser = ConfigParser()
-        parser.read(self.args.configuration)
-        if parser.has_option('main', 'diff'):
-            self.diff = self.set_config(
-                parser.getboolean('main', 'diff'),
-                self.args.diff)
-        if parser.has_option('main', 'text'):
-            self.text = self.set_config(
-                parser.getboolean('main', 'text'),
-                self.args.text)
-        if parser.has_option('main', 'only-plugins'):
-            self.only_plugins = self.set_config(
-                self.option_to_list(parser.get('main', 'only-plugins')),
-                self.args.only_plugins)
-        if parser.has_option('main', 'skip-plugins'):
-            self.skip_plugins = self.set_config(
-                self.option_to_list(parser.get('main', 'skip-plugins')),
-                self.args.skip_plugins)
-        if parser.has_option('main', 'exclude_files'):
-            self.exclude_files = self.option_to_list(
-                parser.get('main', 'exclude_files'))
+    def set_configuration(self):
+        self.configparser.read(self.args.configuration)
+        self.diff = self.get_config_boolean("diff")
+        self.text = self.get_config_boolean("text")
+        self.exclude_files = self.get_config_list("exclude_files")
+        self.include_files = self.get_config_list("include_files")
+        self.only_plugins = self.get_config_list("only_plugins")
+        self.skip_plugins = self.get_config_list("skip_plugins")
+
+    def get_config_boolean(self, name):
+        if self.configparser.has_option('main', name):
+            return self.configparser.getboolean('main', name)
+        else:
+            return self.args.__getattribute__(name)
+
+    def get_config_list(self, name):
+        if len(self.args.__getattribute__(name)) > 0:
+            return self.args.__getattribute__(name)
+        elif self.configparser.has_option('main', name):
+            return self.option_to_list(self.configparser.get('main', name))
+        else:
+            return self.__getattribute__(name)
 
     def option_to_list(self, option):
         out = []
@@ -108,11 +124,6 @@ class Conf:
         except Exception as e:
             print(f"option_to_list error: {e}")
         return out
-
-    def set_config(self, conf, arg):
-        if arg:
-            return arg
-        return conf
 
     def valid_configuration_file(self, path):
         if not os.path.exists(self.default_config_file):

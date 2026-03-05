@@ -25,7 +25,8 @@ There are multiple ways to to install `sosdiff`.
 
 #### Usage
 ~~~
-usage: sosdiff [-h] [-c <config_file>] [-d] [-n SKIP_PLUGINS] [-o ONLY_PLUGINS] [-t] sospath1 sospath2
+usage: sosdiff [-h] [-c <config_file>] [-d] [-e EXCLUDE_FILES] [-i INCLUDE_FILES] [-n SKIP_PLUGINS] [-o ONLY_PLUGINS] [-t]
+               sospath1 sospath2
 
 Compare two sosreports and show the differences.
 
@@ -38,9 +39,13 @@ options:
   -c <config_file>, --configuration <config_file>
                         Configuration file. Defaults to `/home/pablofr/.sosdiff/configuration.ini`
   -d, --diff            Show `diff` when file content don't match.
+  -e EXCLUDE_FILES, --exclude-files EXCLUDE_FILES
+                        Exclude files matching this regexp. Can be used multiple times.
+  -i INCLUDE_FILES, --include-files INCLUDE_FILES
+                        Include files matching this regexp. Can be used multiple times.
   -n SKIP_PLUGINS, --skip-plugins SKIP_PLUGINS
-                        disable these plugins. Can be used multiple times.
+                        Disable these plugins. Can be used multiple times.
   -o ONLY_PLUGINS, --only-plugins ONLY_PLUGINS
-                        enable these plugins only. Can be used multiple times.
+                        Enable these plugins only. Can be used multiple times.
   -t, --text            Print plain text without colors.
 ~~~

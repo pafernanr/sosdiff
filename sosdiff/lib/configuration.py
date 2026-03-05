@@ -1,6 +1,7 @@
 import argparse
+from configparser import ConfigParser
 import os
-import yaml
+import re
 
 
 class Conf:
@@ -8,9 +9,11 @@ class Conf:
     def __init__(self):
         self.default_config_dir = str(os.path.expanduser('~')) + "/.sosdiff"
         self.default_config_file = (
-            f"{self.default_config_dir}/configuration.yaml")
+            f"{self.default_config_dir}/configuration.ini")
         self.text = False
         self.diff = False
+        self.skip_plugins = []
+        self.only_plugins = []
         self.exclude_files = []
 
         self.parser = argparse.ArgumentParser(
@@ -33,18 +36,20 @@ class Conf:
             action='store_true'
             )
         self.parser.add_argument(
-            '-e',
-            '--exclude',
-            metavar="PluginName",
-            help="Exclude this PluginName. Can be used multiple times.",
+            '-n',
+            '--skip-plugins',
+            dest='skip_plugins',
+            metavar="SKIP_PLUGINS",
+            help="disable these plugins. Can be used multiple times.",
             default=[],
             action='append'
             )
         self.parser.add_argument(
-            '-i',
-            '--include',
-            metavar="PluginName",
-            help="Include only this PluginName. Can be used multiple times.",
+            '-o',
+            '--only-plugins',
+            dest='only_plugins',
+            metavar="ONLY_PLUGINS",
+            help="enable these plugins only. Can be used multiple times.",
             default=[],
             action='append'
             )
@@ -66,25 +71,43 @@ class Conf:
             )
         self.args = self.parser.parse_args()
 
-        if (len(self.args.include) > 0
-                and len(self.args.exclude) > 0):
-            self.parser.error(
-                "`--include` and `--exclude` are mutually exclusive.")
+        # if (len(self.args.include) > 0
+        #         and len(self.args.exclude) > 0):
+        #     self.parser.error(
+        #         "`--include` and `--exclude` are mutually exclusive.")
 
         self.read_configuration_file()
 
     def read_configuration_file(self):
-        with open(self.args.configuration, 'r', encoding='utf-8') as stream:
-            try:
-                conf = yaml.safe_load(stream)
-                self.diff = self.set_config(conf['main']['diff'],
-                                            self.args.diff)
-                self.text = self.set_config(conf['main']['text'],
-                                            self.args.text)
-                if conf['exclude_files']:
-                    self.exclude_files = conf['exclude_files']
-            except Exception as e:
-                print(e)
+        parser = ConfigParser()
+        parser.read(self.args.configuration)
+        if parser.has_option('main', 'diff'):
+            self.diff = self.set_config(
+                parser.getboolean('main', 'diff'),
+                self.args.diff)
+        if parser.has_option('main', 'text'):
+            self.text = self.set_config(
+                parser.getboolean('main', 'text'),
+                self.args.text)
+        if parser.has_option('main', 'only-plugins'):
+            self.only_plugins = self.set_config(
+                self.option_to_list(parser.get('main', 'only-plugins')),
+                self.args.only_plugins)
+        if parser.has_option('main', 'skip-plugins'):
+            self.skip_plugins = self.set_config(
+                self.option_to_list(parser.get('main', 'skip-plugins')),
+                self.args.skip_plugins)
+        if parser.has_option('main', 'exclude_files'):
+            self.exclude_files = self.option_to_list(
+                parser.get('main', 'exclude_files'))
+
+    def option_to_list(self, option):
+        out = []
+        try:
+            out = re.findall(r"'(?<!\\)([^,]*?)'", option)
+        except Exception as e:
+            print(f"option_to_list error: {e}")
+        return out
 
     def set_config(self, conf, arg):
         if arg:
@@ -109,15 +132,11 @@ class Conf:
             os.mkdir(self.default_config_dir)
         if not os.path.exists(self.default_config_file):
             pwd = os.path.dirname(__file__)
-            with open(f"{pwd}/../templates/configuration.yaml", 'r',
+            with open(f"{pwd}/../templates/configuration.ini", 'r',
                       encoding='utf-8') as f:
                 with open(self.default_config_file, 'w',
                           encoding='utf-8') as c:
                     c.write(f.read())
-
-    def get_custom_exclude_files(self, path):
-        with open(path, 'r', encoding='utf-8') as f:
-            return f.read().split("\n")
 
     def valid_sosreport_path(self, path):
         if path[-1] == "/":

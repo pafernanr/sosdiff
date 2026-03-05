@@ -50,11 +50,11 @@ class Util:
         return Style.BLUE
 
     def is_plugin_included(self, plugin_name):
-        if len(self.conf.args.include) > 0:
-            if plugin_name not in self.conf.args.include:
+        if len(self.conf.only_plugins) > 0:
+            if plugin_name not in self.conf.only_plugins:
                 return False
-        if len(self.conf.args.exclude) > 0:
-            if plugin_name in self.conf.args.exclude:
+        if len(self.conf.skip_plugins) > 0:
+            if plugin_name in self.conf.skip_plugins:
                 return False
         return True
 

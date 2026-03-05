@@ -13,10 +13,6 @@ Compare two [sosreport](https://github.com/sosreport/sos) and show the differenc
   - Refer to [excluded_href](https://github.com/pafernanr/sosdiff/blob/main/sosdiff/lib/util.py#L20)
 - Custom excluded files can be added to configuration file at `~/.sosdiff/configuration.yaml`.
    
-#### Dependencies
-Required python libraries:
-- pyyaml
-
 #### Installation
 There are multiple ways to to install `sosdiff`.
 
@@ -29,7 +25,7 @@ There are multiple ways to to install `sosdiff`.
 
 #### Usage
 ~~~
-usage: sosdiff [-h] [-c <config_file>] [-d] [-e PluginName] [-i PluginName] [-t] sospath1 sospath2
+usage: sosdiff [-h] [-c <config_file>] [-d] [-n SKIP_PLUGINS] [-o ONLY_PLUGINS] [-t] sospath1 sospath2
 
 Compare two sosreports and show the differences.
 
@@ -40,11 +36,11 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
   -c <config_file>, --configuration <config_file>
-                        Configuration file. Defaults to `/home/pablofr/.sosdiff/configuration.yaml`
+                        Configuration file. Defaults to `/home/pablofr/.sosdiff/configuration.ini`
   -d, --diff            Show `diff` when file content don't match.
-  -e PluginName, --exclude PluginName
-                        Exclude this PluginName. Can be used multiple times.
-  -i PluginName, --include PluginName
-                        Include only this PluginName. Can be used multiple times.
+  -n SKIP_PLUGINS, --skip-plugins SKIP_PLUGINS
+                        disable these plugins. Can be used multiple times.
+  -o ONLY_PLUGINS, --only-plugins ONLY_PLUGINS
+                        enable these plugins only. Can be used multiple times.
   -t, --text            Print plain text without colors.
 ~~~

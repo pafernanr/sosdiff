@@ -1,4 +1,4 @@
-### sosdiff
+## sosdiff
 Compare two [sosreport](https://github.com/sosreport/sos) by parsing `sos_reports/sos.json` to show the differences on collected files and optionally the diff for those files.
 
 - The configuration file is `~/.sosdiff/configuration.ini`.
@@ -6,7 +6,7 @@ Compare two [sosreport](https://github.com/sosreport/sos) by parsing `sos_report
 - Some paths are exluded to avoid "Too many levels of symbolic links" errors. `[r'^/sys/class/.*$', r'^/sys/devices/.*$',]`
   - Refer to [excluded_href](https://github.com/pafernanr/sosdiff/blob/main/sosdiff/lib/util.py)
 
-### Output
+#### Output
 
 | Output | Description | 
 |---|---|

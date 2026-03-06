@@ -1,7 +1,7 @@
 Name: sosdiff
 Version: 0.0.0
 Release: py3
-Summary: Compare two more sosreports and show the differences.
+Summary: Compare two sosreport by parsing `sos_reports/sos.json` to show the differences on collected files and optionally the diff for those files.
 
 License: GPLv3
 URL:            https://github.com/pafernanr/sosdiff
@@ -14,7 +14,7 @@ BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 
 %description
-Compare two more sosreports and show the differences.
+Compare two sosreport by parsing `sos_reports/sos.json` to show the differences on collected files and optionally the diff for those files.
 
 %prep
 %setup -qn %{name}-%{version}

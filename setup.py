@@ -29,7 +29,7 @@ setuptools.setup(
     author='Pablo Fernández Rodríguez',
     url='https://github.com/pafernanr/sosdiff',
     keywords='sos sosreport',
-    description="Compare two sosreports and show the differences.",
+    description="Compare two sosreport by parsing `sos_reports/sos.json` to show the differences on collected files and optionally the diff for those files.",
     long_description_content_type='text/markdown',
     long_description=read("README.md"),
     classifiers=[

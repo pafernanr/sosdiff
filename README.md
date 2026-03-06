@@ -1,8 +1,8 @@
 ### sosdiff
-Compare two [sosreport](https://github.com/sosreport/sos) and show the differences.
+Compare two [sosreport](https://github.com/sosreport/sos) by parsing `sos_reports/sos.json` to show the differences on collected files and optionally the diff for those files.
 
-- `sosdiff` parses `sos_reports/sos.json` and shows the differences:
-- Some files are exluded to avoid "Too many levels of symbolic links" errors. `[r'^/sys/class/.*$', r'^/sys/devices/.*$',]`
+- `sosdiff` parses `sos_reports/sos.json` and shows the differences.
+- Some paths are exluded to avoid "Too many levels of symbolic links" errors. `[r'^/sys/class/.*$', r'^/sys/devices/.*$',]`
   - Refer to [excluded_href](https://github.com/pafernanr/sosdiff/blob/main/sosdiff/lib/util.py)
 - The configuration file is `~/.sosdiff/configuration.ini`.
 - Alternative configuration can be used. E.g: `sosdiff -c ~/.sosdiff/troubleshoot_netwoking.ini`.

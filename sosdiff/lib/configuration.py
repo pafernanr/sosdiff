@@ -20,8 +20,7 @@ class Conf:
 
         self.parser = argparse.ArgumentParser(
             argument_default=argparse.SUPPRESS,
-            description=("Compare two sosreports and show \
-                         the differences.")
+            description=("Compare two sosreport by parsing `sos_reports/sos.json` and show the differences on collected files.")
             )
         self.parser.add_argument(
             '-c',

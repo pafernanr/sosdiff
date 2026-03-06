@@ -38,7 +38,7 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
   -c <config_file>, --configuration <config_file>
-                        Configuration file. Defaults to `/home/pablofr/.sosdiff/configuration.ini`
+                        Configuration file. Defaults to `~/.sosdiff/configuration.ini`
   -d, --diff            Show `diff` when files content don't match.
   -f, --no-diff         Hide `diff` when files content don't match.
   -e EXCLUDE_FILES, --exclude-files EXCLUDE_FILES

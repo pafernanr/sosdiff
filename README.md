@@ -1,20 +1,23 @@
 ### sosdiff
 Compare two [sosreport](https://github.com/sosreport/sos) and show the differences.
 
-- To compare them `sosdiff` reads the file `sos_reports/sos.json` and lists the differences:
-  - ***[-]   :: Plugin is missing on sosreport2. 
-  - ***[--]  :: Entity is missing on sosreport2. 
-  - ***[---] :: File is missing on sosreport2.
-  - ***[/]   :: File content is different. Optionally show `diff` command output.
-  - ***[+]   :: Plugin is present on sosreport2 and missing on sosreport1.
-  - ***[++]  :: Entity is present on sosreport2 and missing on sosreport1.
-  - ***[+++] :: File is present on sosreport2 and missing on sosreport1.
+- `sosdiff` parses `sos_reports/sos.json` and shows the differences:
 - Some files are exluded to avoid "Too many levels of symbolic links" errors. `[r'^/sys/class/.*$', r'^/sys/devices/.*$',]`
   - Refer to [excluded_href](https://github.com/pafernanr/sosdiff/blob/main/sosdiff/lib/util.py)
 - The configuration file is `~/.sosdiff/configuration.ini`. Alternative configuration can be used. E.g:
   ~~~
   sosdiff -c ~/.sosdiff/troubleshoot_netwoking.ini
   ~~~
+
+| Output | Description | 
+|---|---|
+| ***[-] | Plugin is missing on sosreport2. | 
+| ***[--]  | Entity is missing on sosreport2. |
+| ***[---] | File is missing on sosreport2. |
+| ***[/] | File content is different. Optionally show `diff` command output. |
+| ***[+] | Plugin is present on sosreport2 and missing on sosreport1. |
+| ***[++] | Entity is present on sosreport2 and missing on sosreport1. |
+| ***[+++] | File is present on sosreport2 and missing on sosreport1. |
    
 #### Installation
 There are multiple ways to to install `sosdiff`.

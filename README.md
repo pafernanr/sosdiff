@@ -4,10 +4,8 @@ Compare two [sosreport](https://github.com/sosreport/sos) and show the differenc
 - `sosdiff` parses `sos_reports/sos.json` and shows the differences:
 - Some files are exluded to avoid "Too many levels of symbolic links" errors. `[r'^/sys/class/.*$', r'^/sys/devices/.*$',]`
   - Refer to [excluded_href](https://github.com/pafernanr/sosdiff/blob/main/sosdiff/lib/util.py)
-- The configuration file is `~/.sosdiff/configuration.ini`. Alternative configuration can be used. E.g:
-  ~~~
-  sosdiff -c ~/.sosdiff/troubleshoot_netwoking.ini
-  ~~~
+- The configuration file is `~/.sosdiff/configuration.ini`.
+- Alternative configuration can be used. E.g: `sosdiff -c ~/.sosdiff/troubleshoot_netwoking.ini`.
 
 | Output | Description | 
 |---|---|

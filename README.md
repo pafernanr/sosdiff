@@ -19,7 +19,7 @@ Compare two [sosreport](https://github.com/sosreport/sos) and show the differenc
    
 #### Installation
 
-- Using `pip` or using the prebuild packages at [Latest Release](https://github.com/pafernanr/sosdiff/releases/latest)
+- Install using `pip` or the prebuild packages at [Latest Release](https://github.com/pafernanr/sosdiff/releases/latest)
   ~~~
   pip install sosdiff
   ~~~

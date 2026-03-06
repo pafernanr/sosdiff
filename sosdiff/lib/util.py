@@ -24,7 +24,7 @@ class Util:
             color = self.set_out_color(severity)
             reset = Style.RESET
 
-        out = f"{color}[{message}]{reset}"
+        out = f"{color}" + f"***[{message}]".ljust(8, ' ') + f"{reset}"
         out += f"{sep}{pluginname}"
         if entity:
             out += f"{sep}{entity}"
@@ -63,17 +63,15 @@ class Util:
     def is_file_included(self, file_name):
         if len(self.conf.include_files) > 0:
             for r in self.conf.include_files:
-                if re.match(r, file_name):
+                if re.search(r, file_name):
                     return True
             return False
         return self.is_href_included(file_name)
 
     def is_href_included(self, href):
         for exp in self.excluded_href + self.conf.exclude_files:
-            if re.match(exp, href):
-                # print(f"excluded: {href}")
+            if re.search(exp, href):
                 return False
-        # print(f"included: {href}")
         return True
 
     def list_files_in_href(self, basedir, relpath):

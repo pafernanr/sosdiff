@@ -19,6 +19,7 @@ class Conf:
         self.only_plugins = []
 
         self.parser = argparse.ArgumentParser(
+            argument_default=argparse.SUPPRESS,
             description=("Compare two sosreports and show \
                          the differences.")
             )
@@ -34,8 +35,16 @@ class Conf:
         self.parser.add_argument(
             '-d',
             '--diff',
-            help="Show `diff` when file content don't match.",
+            dest='diff',
+            help="Show `diff` when files content don't match.",
             action='store_true'
+            )
+        self.parser.add_argument(
+            '-f',
+            '--no-diff',
+            dest='diff',
+            help="Hide `diff` when files content don't match.",
+            action='store_false'
             )
         self.parser.add_argument(
             '-e',
@@ -70,9 +79,16 @@ class Conf:
             action='append'
             )
         self.parser.add_argument(
+            '-s',
+            '--no-text',
+            dest='text',
+            help="Show colors in the output.",
+            action='store_false'
+            )
+        self.parser.add_argument(
             '-t',
             '--text',
-            help="Print plain text without colors.",
+            help="Hide colors in the outuput.",
             action='store_true'
             )
         self.parser.add_argument(
@@ -86,12 +102,6 @@ class Conf:
             type=self.valid_sosreport_path
             )
         self.args = self.parser.parse_args()
-
-        # if (len(self.args.include) > 0
-        #         and len(self.args.exclude) > 0):
-        #     self.parser.error(
-        #         "`--include` and `--exclude` are mutually exclusive.")
-
         self.set_configuration()
 
     def set_configuration(self):
@@ -104,10 +114,13 @@ class Conf:
         self.skip_plugins = self.get_config_list("skip_plugins")
 
     def get_config_boolean(self, name):
-        if self.configparser.has_option('main', name):
-            return self.configparser.getboolean('main', name)
-        else:
+        try:
             return self.args.__getattribute__(name)
+        except Exception as e:  # noqa: F841
+            if self.configparser.has_option('main', name):
+                return self.configparser.getboolean('main', name)
+            else:
+                return self.__getattribute__(name)
 
     def get_config_list(self, name):
         if len(self.args.__getattribute__(name)) > 0:

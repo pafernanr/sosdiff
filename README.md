@@ -2,16 +2,19 @@
 Compare two [sosreport](https://github.com/sosreport/sos) and show the differences.
 
 - To compare them `sosdiff` reads the file `sos_reports/sos.json` and lists the differences:
-  - [-] Plugin is missing on sosreport2. 
-  - [--] Entity is missing on sosreport2. 
-  - [---] File is missing on sosreport2.
-  - [/] File content is different. Optionally show `diff` command output.
-  - [+] Plugin is present on sosreport2 but it isn't on sosreport1.
-  - [++] Entity is present on sosreport2 but it isn't on sosreport1.
-  - [+++] File is present on sosreport2 but it isn't on sosreport1.
+  - ***[-] Plugin is missing on sosreport2. 
+  - ***[--] Entity is missing on sosreport2. 
+  - ***[---] File is missing on sosreport2.
+  - ***[/] File content is different. Optionally show `diff` command output.
+  - ***[+] Plugin is present on sosreport2 but it isn't on sosreport1.
+  - ***[++] Entity is present on sosreport2 but it isn't on sosreport1.
+  - ***[+++] File is present on sosreport2 but it isn't on sosreport1.
 - Some files are exluded to avoid "Too many levels of symbolic links" errors.
   - Refer to [excluded_href](https://github.com/pafernanr/sosdiff/blob/main/sosdiff/lib/util.py)
-- Custom excluded files can be added to configuration file at `~/.sosdiff/configuration.ini`.
+- Configuration file at `~/.sosdiff/configuration.ini`. Alternative configuration file can be used. E.g:
+  ~~~
+  sosdiff -c ~/.sosdiff/troubleshoot_netwoking.ini
+  ~~~
    
 #### Installation
 There are multiple ways to to install `sosdiff`.
@@ -25,7 +28,7 @@ There are multiple ways to to install `sosdiff`.
 
 #### Usage
 ~~~
-usage: sosdiff [-h] [-c <config_file>] [-d] [-e EXCLUDE_FILES] [-i INCLUDE_FILES] [-n SKIP_PLUGINS] [-o ONLY_PLUGINS] [-t]
+usage: sosdiff [-h] [-c <config_file>] [-d] [-f] [-e EXCLUDE_FILES] [-i INCLUDE_FILES] [-n SKIP_PLUGINS] [-o ONLY_PLUGINS] [-s] [-t]
                sospath1 sospath2
 
 Compare two sosreports and show the differences.
@@ -38,7 +41,8 @@ options:
   -h, --help            show this help message and exit
   -c <config_file>, --configuration <config_file>
                         Configuration file. Defaults to `/home/pablofr/.sosdiff/configuration.ini`
-  -d, --diff            Show `diff` when file content don't match.
+  -d, --diff            Show `diff` when files content don't match.
+  -f, --no-diff         Hide `diff` when files content don't match.
   -e EXCLUDE_FILES, --exclude-files EXCLUDE_FILES
                         Exclude files matching this regexp. Can be used multiple times.
   -i INCLUDE_FILES, --include-files INCLUDE_FILES
@@ -47,5 +51,6 @@ options:
                         Disable these plugins. Can be used multiple times.
   -o ONLY_PLUGINS, --only-plugins ONLY_PLUGINS
                         Enable these plugins only. Can be used multiple times.
-  -t, --text            Print plain text without colors.
+  -s, --no-text         Show colors in the output.
+  -t, --text            Hide colors in the outuput.
 ~~~

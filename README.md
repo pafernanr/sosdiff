@@ -2,16 +2,16 @@
 Compare two [sosreport](https://github.com/sosreport/sos) and show the differences.
 
 - To compare them `sosdiff` reads the file `sos_reports/sos.json` and lists the differences:
-  - ***[-] Plugin is missing on sosreport2. 
-  - ***[--] Entity is missing on sosreport2. 
-  - ***[---] File is missing on sosreport2.
-  - ***[/] File content is different. Optionally show `diff` command output.
-  - ***[+] Plugin is present on sosreport2 but it isn't on sosreport1.
-  - ***[++] Entity is present on sosreport2 but it isn't on sosreport1.
-  - ***[+++] File is present on sosreport2 but it isn't on sosreport1.
-- Some files are exluded to avoid "Too many levels of symbolic links" errors.
+  - ***[-]   :: Plugin is missing on sosreport2. 
+  - ***[--]  :: Entity is missing on sosreport2. 
+  - ***[---] :: File is missing on sosreport2.
+  - ***[/]   :: File content is different. Optionally show `diff` command output.
+  - ***[+]   :: Plugin is present on sosreport2 and missing on sosreport1.
+  - ***[++]  :: Entity is present on sosreport2 and missing on sosreport1.
+  - ***[+++] :: File is present on sosreport2 and missing on sosreport1.
+- Some files are exluded to avoid "Too many levels of symbolic links" errors. `[r'^/sys/class/.*$', r'^/sys/devices/.*$',]`
   - Refer to [excluded_href](https://github.com/pafernanr/sosdiff/blob/main/sosdiff/lib/util.py)
-- Configuration file at `~/.sosdiff/configuration.ini`. Alternative configuration file can be used. E.g:
+- The configuration file is `~/.sosdiff/configuration.ini`. Alternative configuration can be used. E.g:
   ~~~
   sosdiff -c ~/.sosdiff/troubleshoot_netwoking.ini
   ~~~

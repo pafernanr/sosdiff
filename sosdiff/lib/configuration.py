@@ -20,7 +20,7 @@ class Conf:
 
         self.parser = argparse.ArgumentParser(
             argument_default=argparse.SUPPRESS,
-            description=("Compare two sosreport by parsing `sos_reports/sos.json` and show the differences on collected files.")
+            description=("Compare two sosreport by parsing `sos_reports/sos.json` and show the collected files differences.")
             )
         self.parser.add_argument(
             '-c',
@@ -35,14 +35,14 @@ class Conf:
             '-d',
             '--diff',
             dest='diff',
-            help="Show `diff` when files content don't match.",
+            help="Show `diff` when files content doesn't match.",
             action='store_true'
             )
         self.parser.add_argument(
             '-f',
             '--no-diff',
             dest='diff',
-            help="Hide `diff` when files content don't match.",
+            help="Hide `diff` when files content doesn't match.",
             action='store_false'
             )
         self.parser.add_argument(

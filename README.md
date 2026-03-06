@@ -1,5 +1,5 @@
 ## sosdiff
-Compare two [sosreport](https://github.com/sosreport/sos) by parsing `sos_reports/sos.json` to show the differences on collected files and optionally the diff for those files.
+Compare two [sosreport](https://github.com/sosreport/sos) by parsing `sos_reports/sos.json` to show collected files differences and optionally the diff for those files.
 
 - The configuration file is `~/.sosdiff/configuration.ini`.
 - Alternative configuration can be used. E.g: `sosdiff -c ~/.sosdiff/troubleshoot_netwoking.ini`.

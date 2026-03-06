@@ -18,14 +18,11 @@ Compare two [sosreport](https://github.com/sosreport/sos) and show the differenc
 | ***[+++] | File is present on sosreport2 and missing on sosreport1. |
    
 #### Installation
-There are multiple ways to to install `sosdiff`.
 
-- Using `pip`.
+- Using `pip` or using the prebuild packages at [Latest Release](https://github.com/pafernanr/sosdiff/releases/latest)
   ~~~
   pip install sosdiff
   ~~~
-
-- Using the prebuild packages at [Latest Release](https://github.com/pafernanr/sosdiff/releases/latest)
 
 #### Usage
 ~~~

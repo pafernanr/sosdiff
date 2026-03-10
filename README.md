@@ -11,7 +11,7 @@ Compare two [sosreport](https://github.com/sosreport/sos) by parsing `sos_report
 | Output | Description | 
 |---|---|
 | [-  ] | Plugin is missing on sosreport2. | 
-| [-- ]  | Entity is missing on sosreport2. |
+| [-- ] | Entity is missing on sosreport2. |
 | [---] | File is missing on sosreport2. |
 | [/  ] | File content is different. Optionally show `diff` command output. |
 | [+  ] | Plugin is present on sosreport2 and missing on sosreport1. |

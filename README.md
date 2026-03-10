@@ -20,7 +20,7 @@ Compare two [sosreport](https://github.com/sosreport/sos) by parsing `sos_report
    
 #### Installation
 
-- Install using `pip` or the prebuild packages at [Latest Release](https://github.com/pafernanr/sosdiff/releases/latest)
+- Install using `pip` or the package at [Latest Release](https://github.com/pafernanr/sosdiff/releases/latest)
   ~~~
   pip install sosdiff
   ~~~

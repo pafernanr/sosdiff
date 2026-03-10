@@ -24,7 +24,7 @@ class Util:
             color = self.set_out_color(severity)
             reset = Style.RESET
 
-        out = f"{color}" + f"***[{message}]".ljust(8, ' ') + f"{reset}"
+        out = f"{color}" + f"[{message.ljust(3, ' ')}]" + f"{reset}"
         out += f"{sep}{pluginname}"
         if entity:
             out += f"{sep}{entity}"

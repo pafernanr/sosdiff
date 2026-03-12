@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 
 from sosdiff.lib.configuration import Conf
@@ -31,18 +32,19 @@ class SosDiff:
 
     def compare_properties(self, plugin_name, entity, properties, s2):
         for k, v in properties.items():
-            if "href" in v:
-                if not self.util.is_file_included(v["href"][2:]):
-                    continue
+            v = re.sub(r'^\.\.', '', v["href"])
+            if not self.util.is_file_included(v):
+                continue
             if k not in s2[plugin_name][entity]:
                 self.util.print_out(2, "---", plugin_name,
-                                    entity=entity, propval=k)
+                                    entity=entity,
+                                    propval=v)
                 continue
             self.compare_values(plugin_name, entity, v)
 
     def compare_values(self, plugin_name, entity, v):
         if entity in ["copied_files", "created_files", "commands"]:
-            self.compare_file_content(plugin_name, entity, v["href"][2:])
+            self.compare_file_content(plugin_name, entity, v)
         else:
             print(f"ERROR: Unknown Entity {entity}")
             sys.exit(1)
@@ -88,12 +90,14 @@ class SosDiff:
 
     def show_extra_properties(self, plugin_name, entity,
                               properties1, properties2):
-        for prop in properties2.keys():
+        for prop, value in properties2.items():
             if prop not in properties1.keys():
-                if not self.util.is_file_included(prop):
+                value = re.sub(r'^\.\.', '', value["href"])
+                if not self.util.is_file_included(value):
                     continue
                 self.util.print_out(3, "+++", plugin_name,
-                                    entity=entity, propval=prop)
+                                    entity=entity,
+                                    propval=value)
 
     def main(self):
         self.sos1 = self.util.load_sos_report(self.sospath1)

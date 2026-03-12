@@ -51,14 +51,13 @@ class Util:
         return Style.BLUE
 
     def is_plugin_included(self, plugin_name):
-        out = True
         if len(self.conf.only_plugins) > 0:
             if plugin_name not in self.conf.only_plugins:
-                out = False
+                return False
         if len(self.conf.skip_plugins) > 0:
-            if plugin_name not in self.conf.skip_plugins:
-                out = True
-        return out
+            if plugin_name in self.conf.skip_plugins:
+                return False
+        return True
 
     def is_file_included(self, file_name):
         if len(self.conf.include_files) > 0:
